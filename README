@@ -1,0 +1,28 @@
+#--------------- TỔNG QUAN ---------------
+    cài đặt python: tại python.org, Khi cài đặt, nhớ chọn tùy chọn Add Python to PATH để dễ dàng sử dụng Python từ dòng lệnh.
+
+    #Tóm tắt các thư viện và công cụ hữu ích: 
+        Subprocess và os: Để chạy lệnh hệ thống
+        socket: Để tạo kết nối client-server
+        pyinstaller: đóng gói chương trình
+        psutil:  Để chụp màn hình
+        pillow: Để chụp màn hình
+        sSL: Để mã hóa kết nối.
+        shutil: Để thao tác file.
+        pynput hoặc keyboard: Để khóa bàn phím và chuột.
+        pyautogui: (Tùy chọn) Cài đặt pyautogui nếu cần điều khiển chuột và bàn phím chính xác hơn
+                    Dùng để tự động hóa việc điều khiển giao diện đồ họa như di chuyển chuột, nhấp chuột, hoặc nhập văn bản.
+      
+
+#--------------- CHI TIẾT ---------------
+    #Bước 1: Cài đặt các thư viện Python cần thiết
+    command: pip install pyinstaller psutil pillow pynput pyautogui
+
+    #Bước 2: Đóng gói chương trình bằng PyInstaller
+    command: pyinstaller --onefile --distpath ./dist server.py
+
+    #giải thích:
+    Trong đó: 
+        --onefile: Tùy chọn này tạo một file thực thi duy nhất (không cần thư mục chứa các file bổ sung).
+        --distpath ./dist: Tùy chọn này sẽ yêu cầu PyInstaller tạo file thực thi trong thư mục dist/ ngay trong thư mục hiện tại.
+        server_script.py: Tên file Python chứa mã nguồn của server.

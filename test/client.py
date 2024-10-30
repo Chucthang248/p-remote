@@ -1,28 +1,43 @@
 import socket
 import tkinter as tk
 from tkinter import ttk
+import logging
+from ip import get_local_ip
+
+# Cấu hình logging, lưu log vào file 'client.log' và ghi ở mức DEBUG
+logging.basicConfig(filename='log/client.log', level=logging.DEBUG, 
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Hàm send_command kết nối với server và gửi command
 def send_command(command):
     try:
+        #server_ip = get_local_ip()
+        server_ip = '192.168.11.130'
+        logging.debug(f"IP: {server_ip}")
+        logging.debug(f"dang ket noi: {command}")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
-            client_socket.connect(('192.168.141.128', 49691))
+            client_socket.connect((server_ip, 49691))
             client_socket.sendall(command.encode())
             response = client_socket.recv(1024).decode()
         return response
     except Exception as e:
+        logging.error(f"loi khi gui toi server: {str(e)}")
         return f"Error: {str(e)}"
 
 # Hàm fetch_process_applications_list để gửi và in ra các ứng dụng đang chạy. Các ứng dụng có đuôi exe, bat, cmd.exe
 def fetch_process_applications_list():
-    processes = send_command("list").split("\n")
-    # Xóa danh sách cũ trước khi cập nhật
-    process_list.delete(0, tk.END)
-    for process in processes:
-        # Kiểm tra nếu process không rỗng và ứng dụng có đuôi exe, bat, cmd.exe và thêm ứng dụng vào danh sách hiển thị
-        if process:
-            if (process.endswith('.exe') or process.endswith('.bat') or 'cmd.exe' in process):
-                process_list.insert(tk.END, process)
+    logging.debug("bat dau cap nhat danh sach")
+    try:
+        processes = send_command("list").split("\n")
+        process_list.delete(0, tk.END)  # Xóa danh sách cũ trước khi cập nhật
+        for process in processes:
+            # Kiểm tra và thêm ứng dụng vào danh sách hiển thị
+            if process:
+                if (process.endswith('.exe') or process.endswith('.bat') or 'cmd.exe' in process):
+                    process_list.insert(tk.END, process)
+        logging.debug("cap nhat danh sach hoan tat")
+    except Exception as e:
+        logging.error(f"loi cap nhat: {str(e)}")
 
 
 # Hàm open_application để mở ứng dụng

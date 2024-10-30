@@ -20,6 +20,7 @@
 
     #Bước 2: Đóng gói chương trình bằng PyInstaller
     command: pyinstaller --onefile --distpath ./dist server.py
+    command: pyinstaller --onefile --distpath ./dist/services server.py
 
     #giải thích:
     Trong đó: 

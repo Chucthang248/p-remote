@@ -7,7 +7,7 @@ import json
 def connect_to_server():
     try:
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect(("192.168.11.130", 12345))  # Thay SERVER_IP bằng IP của server
+        client_socket.connect(("192.168.11.130", 12345))
         return client_socket
     except Exception as e:
         print(f"Không thể kết nối tới server: {e}")
@@ -57,7 +57,9 @@ def update_services():
         
         if status == "running":
             start_button.config(state="disabled")
+            stop_button.config(state="normal")
         else:
+            start_button.config(state="normal")
             stop_button.config(state="disabled")
         
         start_button.pack(side="left")
